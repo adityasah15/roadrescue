@@ -7,22 +7,24 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'Segoe UI',sans-serif; background:#0a0b14; color:#fff; min-height:100vh; display:flex; flex-direction:column; }
-  .header { background:#13141f; border-bottom:1px solid rgba(255,255,255,0.08); padding:14px 24px; display:flex; align-items:center; gap:12px; }
-  .header h1 { font-size:18px; font-weight:800; color:#ff6600; }
+  body { font-family:'DM Sans',system-ui,sans-serif; background:#0a0e17; color:#fff; min-height:100vh; display:flex; flex-direction:column; }
+  .header { background:#131a2a; border-bottom:1px solid rgba(255,255,255,0.08); padding:14px 24px; display:flex; align-items:center; gap:12px; }
+  .header h1 { font-size:18px; font-weight:800; color:#ff8a1e; }
   .header .back { color:#aaa; text-decoration:none; font-size:13px; }
-  .info-bar { background:#13141f; padding:12px 24px; display:flex; gap:20px; flex-wrap:wrap; border-bottom:1px solid rgba(255,255,255,0.06); }
+  .info-bar { background:#131a2a; padding:12px 24px; display:flex; gap:20px; flex-wrap:wrap; border-bottom:1px solid rgba(255,255,255,0.06); }
   .info-item { font-size:13px; color:#aaa; }
   .info-item b { color:#fff; }
-  .status-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(39,174,96,0.15); border:1px solid rgba(39,174,96,0.3); color:#27ae60; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:700; }
-  .status-dot { width:8px; height:8px; border-radius:50%; background:#27ae60; animation:pulse 1.5s infinite; }
+  .status-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(39,174,96,0.15); border:1px solid rgba(39,174,96,0.3); color:#22c55e; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:700; }
+  .status-dot { width:8px; height:8px; border-radius:50%; background:#22c55e; animation:pulse 1.5s infinite; }
   @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
   #map { flex:1; min-height:calc(100vh - 140px); }
   .waiting { display:flex; flex-direction:column; align-items:center; justify-content:center; flex:1; gap:16px; color:#aaa; }
-  .waiting .spinner { width:40px; height:40px; border:3px solid rgba(255,255,255,0.1); border-top-color:#ff6600; border-radius:50%; animation:spin 1s linear infinite; }
+  .waiting .spinner { width:40px; height:40px; border:3px solid rgba(255,255,255,0.1); border-top-color:#ff8a1e; border-radius:50%; animation:spin 1s linear infinite; }
   @keyframes spin { to { transform:rotate(360deg); } }
-  .error-screen { display:flex; flex-direction:column; align-items:center; justify-content:center; flex:1; gap:12px; color:#e74c3c; font-size:15px; }
+  .error-screen { display:flex; flex-direction:column; align-items:center; justify-content:center; flex:1; gap:12px; color:#f43f5e; font-size:15px; }
 </style>
+    <link rel="stylesheet" href="assets/css/app.css">
+    <script src="assets/js/shell.js" defer></script>
 </head>
 <body>
 
@@ -138,7 +140,7 @@ function mechanicIcon() {
   return L.divIcon({
     className: '',
     html: `<div style="
-      background:#ff6600;
+      background:#ff8a1e;
       width:42px; height:42px;
       border-radius:50% 50% 50% 0;
       transform:rotate(-45deg);
@@ -157,7 +159,7 @@ function customerIcon() {
   return L.divIcon({
     className: '',
     html: `<div style="
-      background:#3498db;
+      background:#38bdf8;
       width:36px; height:36px;
       border-radius:50%;
       border:3px solid #fff;

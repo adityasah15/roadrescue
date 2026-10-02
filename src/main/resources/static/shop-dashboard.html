@@ -17,20 +17,20 @@
             --bg-surface: #141729;
             --bg-raised: #1a1f35;
 
-            --stripe-purple: #635bff;
-            --stripe-purple-bright: #7c74ff;
-            --stripe-violet: #7c3aed;
-            --stripe-glow: rgba(99,91,255,0.18);
+            --stripe-purple: #ff8a1e;
+            --stripe-purple-bright: #ffa94d;
+            --stripe-violet: #e06e00;
+            --stripe-glow: rgba(255,138,30,0.18);
 
-            --primary: #635bff;
-            --primary-hover: #7c74ff;
-            --primary-light: rgba(99,91,255,0.15);
+            --primary: #ff8a1e;
+            --primary-hover: #ffa94d;
+            --primary-light: rgba(255,138,30,0.15);
 
             --text-main: #eef0ff;
             --text-secondary: #a8b0d8;
             --text-muted: #5a6080;
             --border: rgba(255,255,255,0.08);
-            --border-accent: rgba(99,91,255,0.4);
+            --border-accent: rgba(255,138,30,0.4);
 
             --success: #10b981;
             --error: #f43f5e;
@@ -143,7 +143,7 @@
             height: 3px;
             background: linear-gradient(90deg, var(--stripe-purple), var(--stripe-violet));
             border-radius: 3px 3px 0 0;
-            box-shadow: 0 -2px 12px rgba(99,91,255,0.5);
+            box-shadow: 0 -2px 12px rgba(255,138,30,0.5);
         }
 
         /* Main Content */
@@ -184,7 +184,7 @@
             background: var(--bg-dark); border-bottom: 1px solid var(--border);
         }
         tbody tr { transition: background 0.2s; }
-        tbody tr:hover { background: rgba(99,91,255,0.04); }
+        tbody tr:hover { background: rgba(255,138,30,0.04); }
         tbody td {
             padding: 16px; font-size: 13px; color: var(--text-main);
             border-bottom: 1px solid var(--border);
@@ -217,8 +217,8 @@
             font-size: 12px; font-weight: 600; cursor: pointer; font-family: var(--font);
             transition: all 0.2s; margin-right: 4px;
         }
-        .btn-acc { background: linear-gradient(135deg, var(--stripe-purple), var(--stripe-violet)); color: white; border: none; box-shadow: 0 2px 10px rgba(99,91,255,0.3); }
-        .btn-acc:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(99,91,255,0.45); }
+        .btn-acc { background: linear-gradient(135deg, var(--stripe-purple), var(--stripe-violet)); color: white; border: none; box-shadow: 0 2px 10px rgba(255,138,30,0.3); }
+        .btn-acc:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(255,138,30,0.45); }
         .btn-rej { color: var(--error); border: 1px solid rgba(244,63,94,0.3); }
         .btn-rej:hover { background: rgba(244,63,94,0.08); }
         .btn-complete { background: var(--success); color: white; border: none; }
@@ -246,7 +246,7 @@
             color: var(--text-main); background: var(--bg-void); outline: none;
             transition: all 0.2s;
         }
-        .fg input:focus { border-color: var(--stripe-purple); box-shadow: 0 0 0 3px rgba(99,91,255,0.12); }
+        .fg input:focus { border-color: var(--stripe-purple); box-shadow: 0 0 0 3px rgba(255,138,30,0.12); }
 
         /* Branch List */
         .branch-card {
@@ -261,21 +261,21 @@
         .btn-remove-branch:hover { color: var(--error); }
         
         .btn-add-branch {
-            background: transparent; color: var(--stripe-purple-bright); border: 1px dashed rgba(99,91,255,0.4);
+            background: transparent; color: var(--stripe-purple-bright); border: 1px dashed rgba(255,138,30,0.4);
             padding: 10px 16px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600;
             cursor: pointer; display: flex; align-items: center; gap: 8px; width: fit-content;
             transition: all 0.2s; font-family: var(--font);
         }
-        .btn-add-branch:hover { background: rgba(99,91,255,0.1); border-color: rgba(99,91,255,0.6); }
+        .btn-add-branch:hover { background: rgba(255,138,30,0.1); border-color: rgba(255,138,30,0.6); }
 
         .btn-save-profile {
             background: linear-gradient(135deg, var(--stripe-purple), var(--stripe-violet));
             color: white; border: none; padding: 14px 32px; border-radius: var(--radius-sm);
             font-size: 15px; font-weight: 600; cursor: pointer; font-family: var(--font);
-            box-shadow: 0 4px 16px rgba(99,91,255,0.3);
+            box-shadow: 0 4px 16px rgba(255,138,30,0.3);
             transition: all 0.2s; margin-left: 32px; margin-bottom: 32px;
         }
-        .btn-save-profile:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(99,91,255,0.45); }
+        .btn-save-profile:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,138,30,0.45); }
 
         /* Modals */
         .overlay {
@@ -287,7 +287,7 @@
 
         .modal-base {
             background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: var(--radius-lg); box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(99,91,255,0.1);
+            border-radius: var(--radius-lg); box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,138,30,0.1);
             width: 100%; overflow: hidden;
         }
         .mechanic-popup { max-width: 500px; }
@@ -309,14 +309,14 @@
         .popup-field { margin-bottom: 16px; }
         .popup-field label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px; }
         .popup-field input { width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; background: var(--bg-void); color: var(--text-main); outline: none; transition: all 0.2s; }
-        .popup-field input:focus { border-color: var(--stripe-purple); box-shadow: 0 0 0 3px rgba(99,91,255,0.12); }
+        .popup-field input:focus { border-color: var(--stripe-purple); box-shadow: 0 0 0 3px rgba(255,138,30,0.12); }
 
 
 
         .popup-actions { display: flex; gap: 12px; }
         .btn-cancel { flex: 1; padding: 12px; background: transparent; color: var(--text-main); border: 1px solid var(--border); border-radius: 8px; font-weight: 600; cursor: pointer; }
-        .btn-confirm { flex: 2; padding: 12px; background: linear-gradient(135deg, var(--stripe-purple), var(--stripe-violet)); color: white; border: none; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; font-family: var(--font); box-shadow: 0 4px 16px rgba(99,91,255,0.3); transition: all 0.2s; }
-        .btn-confirm:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(99,91,255,0.4); }
+        .btn-confirm { flex: 2; padding: 12px; background: linear-gradient(135deg, var(--stripe-purple), var(--stripe-violet)); color: white; border: none; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; font-family: var(--font); box-shadow: 0 4px 16px rgba(255,138,30,0.3); transition: all 0.2s; }
+        .btn-confirm:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(255,138,30,0.4); }
 
         /* Review Modal Specifics */
         .review-view-pop .modal-head { background: linear-gradient(135deg, var(--stripe-purple), var(--stripe-violet)); border-bottom: none; }
@@ -326,7 +326,7 @@
         .rating-label { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
         .review-text { font-size: 14px; color: var(--text-main); line-height: 1.6; font-style: italic; background: var(--bg-void); border-radius: var(--radius-sm); margin: 0 24px; padding: 16px; border: 1px solid var(--border); }
         .btn-close-rv { margin-top: 24px; padding: 10px 32px; background: rgba(255,255,255,0.06); color: var(--text-secondary); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-        .btn-close-rv:hover { background: rgba(99,91,255,0.15); border-color: var(--border-accent); color: var(--text-main); }
+        .btn-close-rv:hover { background: rgba(255,138,30,0.15); border-color: var(--border-accent); color: var(--text-main); }
 
         @media(max-width: 768px) {
             .page { padding: 20px; }
@@ -336,6 +336,8 @@
             .btn-save-profile { margin-left: 20px; }
         }
     </style>
+    <link rel="stylesheet" href="assets/css/app.css">
+    <script src="assets/js/shell.js" defer></script>
 </head>
 <body>
 

@@ -15,20 +15,20 @@
     --bg-surface: #141729;
     --bg-raised: #1a1f35;
 
-    --stripe-purple: #635bff;
-    --stripe-purple-bright: #7c74ff;
-    --stripe-violet: #7c3aed;
-    --stripe-glow: rgba(99,91,255,0.18);
+    --stripe-purple: #ff8a1e;
+    --stripe-purple-bright: #ffa94d;
+    --stripe-violet: #e06e00;
+    --stripe-glow: rgba(255,138,30,0.18);
 
-    --primary: #635bff;
-    --primary-hover: #7c74ff;
-    --primary-light: rgba(99,91,255,0.15);
+    --primary: #ff8a1e;
+    --primary-hover: #ffa94d;
+    --primary-light: rgba(255,138,30,0.15);
 
     --text-main: #eef0ff;
     --text-secondary: #a8b0d8;
     --text-muted: #5a6080;
     --border: rgba(255,255,255,0.08);
-    --border-accent: rgba(99,91,255,0.4);
+    --border-accent: rgba(255,138,30,0.4);
 
     --success: #10b981;
     --error: #f43f5e;
@@ -185,7 +185,7 @@ body {
 
 .fg input:focus, .fg select:focus, .fg textarea:focus {
     border-color: var(--stripe-purple);
-    box-shadow: 0 0 0 3px rgba(99,91,255,0.12);
+    box-shadow: 0 0 0 3px rgba(255,138,30,0.12);
 }
 
 .fg input.valid { border-color: var(--success); }
@@ -304,11 +304,11 @@ body {
     cursor: pointer;
     transition: all 0.2s;
     margin-top: 8px;
-    box-shadow: 0 4px 16px rgba(99,91,255,0.3);
+    box-shadow: 0 4px 16px rgba(255,138,30,0.3);
 }
 .btn-sub:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(99,91,255,0.45);
+    box-shadow: 0 8px 24px rgba(255,138,30,0.45);
 }
 
 /* Table Styles */
@@ -327,7 +327,7 @@ thead th {
     background: var(--bg-dark);
 }
 tbody tr { transition: background 0.2s; }
-tbody tr:hover { background: rgba(99,91,255,0.04); }
+tbody tr:hover { background: rgba(255,138,30,0.04); }
 tbody td {
     padding: 16px;
     font-size: 14px;
@@ -380,8 +380,8 @@ tbody tr:last-child td { border-bottom: none; }
     margin-right: 6px;
 }
 
-.btn-det { color: var(--stripe-purple-bright); border: 1px solid rgba(99,91,255,0.3); }
-.btn-det:hover { background: rgba(99,91,255,0.1); }
+.btn-det { color: var(--stripe-purple-bright); border: 1px solid rgba(255,138,30,0.3); }
+.btn-det:hover { background: rgba(255,138,30,0.1); }
 
 .btn-del { color: var(--error); border: 1px solid rgba(244,63,94,0.3); }
 .btn-del:hover { background: rgba(244,63,94,0.08); }
@@ -411,7 +411,7 @@ tbody tr:last-child td { border-bottom: none; }
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(99,91,255,0.1);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,138,30,0.1);
     width: 100%;
     overflow: hidden;
 }
@@ -492,7 +492,7 @@ tbody tr:last-child td { border-bottom: none; }
     background: linear-gradient(135deg, var(--stripe-purple), var(--stripe-violet)); color: white;
     border: none; border-radius: var(--radius-sm);
     font-size: 14px; font-weight: 600; cursor: pointer; font-family: var(--font);
-    box-shadow: 0 4px 16px rgba(99,91,255,0.3); transition: all 0.2s;
+    box-shadow: 0 4px 16px rgba(255,138,30,0.3); transition: all 0.2s;
 }
 .btn-confirm-loc:disabled { background: rgba(255,255,255,0.06); color: var(--text-muted); cursor: not-allowed; box-shadow: none; }
 .btn-cancel-loc {
@@ -533,7 +533,7 @@ tbody tr:last-child td { border-bottom: none; }
     width: 100%; padding: 12px;
     background: linear-gradient(135deg, var(--stripe-purple), var(--stripe-violet)); color: white;
     border: none; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; cursor: pointer;
-    font-family: var(--font); box-shadow: 0 4px 16px rgba(99,91,255,0.3);
+    font-family: var(--font); box-shadow: 0 4px 16px rgba(255,138,30,0.3);
 }
 
 .del-icon {
@@ -561,14 +561,14 @@ tbody tr:last-child td { border-bottom: none; }
     font-size: 14px; font-family: var(--font-body); color: var(--text-main); background: var(--bg-void);
     outline: none; resize: vertical; min-height: 100px; transition: all 0.2s;
 }
-.review-comment:focus { border-color: var(--stripe-purple); box-shadow: 0 0 0 3px rgba(99,91,255,0.12); }
+.review-comment:focus { border-color: var(--stripe-purple); box-shadow: 0 0 0 3px rgba(255,138,30,0.12); }
 .btn-submit-review {
     width: 100%; padding: 14px;
     background: linear-gradient(135deg, var(--stripe-purple), var(--stripe-violet)); color: white;
     border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 600; cursor: pointer;
-    font-family: var(--font); box-shadow: 0 4px 16px rgba(99,91,255,0.3); transition: all 0.2s; margin-top: 16px;
+    font-family: var(--font); box-shadow: 0 4px 16px rgba(255,138,30,0.3); transition: all 0.2s; margin-top: 16px;
 }
-.btn-submit-review:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(99,91,255,0.45); }
+.btn-submit-review:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(255,138,30,0.45); }
 
 .view-review-pop { text-align: center; padding-bottom: 30px; }
 .view-review-pop .modal-head { background: linear-gradient(135deg, #065f46, var(--success)); }
@@ -577,7 +577,7 @@ tbody tr:last-child td { border-bottom: none; }
 .review-stars-display { font-size: 32px; margin: 24px 0 8px; letter-spacing: 4px; color: var(--warning); }
 .review-comment-display { font-size: 14px; color: var(--text-muted); padding: 0 30px; line-height: 1.6; font-style: italic; }
 .btn-close-review { margin-top: 24px; padding: 10px 30px; background: rgba(255,255,255,0.06); color: var(--text-secondary); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: all 0.2s; }
-.btn-close-review:hover { background: rgba(99,91,255,0.15); border-color: var(--border-accent); color: var(--text-main); }
+.btn-close-review:hover { background: rgba(255,138,30,0.15); border-color: var(--border-accent); color: var(--text-main); }
 
 @media(max-width: 768px) {
     .page { padding: 20px; }
@@ -586,6 +586,8 @@ tbody tr:last-child td { border-bottom: none; }
     .card { padding: 20px; }
 }
 </style>
+    <link rel="stylesheet" href="assets/css/app.css">
+    <script src="assets/js/shell.js" defer></script>
 </head>
 <body>
 
@@ -598,12 +600,12 @@ tbody tr:last-child td { border-bottom: none; }
         <span class="nav-user">Logged in as <strong id="user"></strong></span>
         <a href="nova.html" style="
             display:inline-flex; align-items:center; gap:7px;
-            background:linear-gradient(135deg,#635bff,#7c3aed);
+            background:linear-gradient(135deg,#ff8a1e,#e06e00);
             color:#fff; border:none; padding:8px 16px;
             border-radius:8px; font-size:13px; font-weight:600;
             font-family:'DM Sans',sans-serif; cursor:pointer;
             text-decoration:none; letter-spacing:0.2px;
-            box-shadow:0 2px 12px rgba(99,91,255,0.35);
+            box-shadow:0 2px 12px rgba(255,138,30,0.35);
             transition:opacity 0.2s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
             🤖 Nova
         </a>
@@ -919,7 +921,7 @@ function openMapPopup() {
         attribution: '&copy; OpenStreetMap contributors &copy; CARTO' 
     }).addTo(popupMapInst);
     
-    L.rectangle(indiaBounds, { color: '#6366f1', weight: 2, fill: false, dashArray: '6,4' }).addTo(popupMapInst);
+    L.rectangle(indiaBounds, { color: '#ff8a1e', weight: 2, fill: false, dashArray: '6,4' }).addTo(popupMapInst);
     
     popupMapInst.on('click', e => {
       const la = e.latlng.lat, ln = e.latlng.lng;
@@ -1065,7 +1067,7 @@ function fetchReqs() {
 function showMech(req) {
   document.getElementById("dN").innerText = req.mechanicName || "-";
   document.getElementById("dP").innerHTML = req.mechanicPhone
-    ? `<a href="tel:${req.mechanicPhone}" style="color:#ff6600;font-weight:700;text-decoration:none;">📞 ${req.mechanicPhone}</a>`
+    ? `<a href="tel:${req.mechanicPhone}" style="color:#ff8a1e;font-weight:700;text-decoration:none;">📞 ${req.mechanicPhone}</a>`
     : "-";
   document.getElementById("dT").innerText = req.mechanicEta || req.estimatedArrival || "-";
   const has = req.mechanicLatitude && req.mechanicLongitude;
@@ -1279,7 +1281,7 @@ function renderShopsOnMap(shops) {
       const icon = L.divIcon({
         className: '',
         html: `<div style="
-          background:#ff6600;
+          background:#ff8a1e;
           width:34px; height:34px;
           border-radius:50% 50% 50% 0;
           transform:rotate(-45deg);
@@ -1294,7 +1296,7 @@ function renderShopsOnMap(shops) {
       });
 
       const phoneLink = shop.phone
-        ? `<a href="tel:${shop.phone}" style="color:#ff6600; font-weight:700; font-size:15px; text-decoration:none;">📞 ${shop.phone}</a>`
+        ? `<a href="tel:${shop.phone}" style="color:#ff8a1e; font-weight:700; font-size:15px; text-decoration:none;">📞 ${shop.phone}</a>`
         : '<span style="color:#aaa;">No phone listed</span>';
 
       const popup = `
@@ -1337,7 +1339,7 @@ function renderShopCards(shops) {
     try { branches = JSON.parse(shop.branchesJson || '[]'); } catch(e) {}
 
     const phoneHtml = shop.phone
-      ? `<a href="tel:${shop.phone}" style="color:#ff6600; font-weight:700; text-decoration:none; font-size:15px;">📞 ${shop.phone}</a>`
+      ? `<a href="tel:${shop.phone}" style="color:#ff8a1e; font-weight:700; text-decoration:none; font-size:15px;">📞 ${shop.phone}</a>`
       : '<span style="color:#888; font-size:13px;">No phone</span>';
 
     const branchList = branches.length > 0
@@ -1347,7 +1349,7 @@ function renderShopCards(shops) {
     const flyToBranch = branches.find(b => b.lat && b.lng);
     const flyBtn = flyToBranch
       ? `<button onclick="flyToShop(${flyToBranch.lat},${flyToBranch.lng})"
-           style="margin-top:10px; width:100%; background:#ff6600; color:#fff; border:none;
+           style="margin-top:10px; width:100%; background:#ff8a1e; color:#fff; border:none;
                   padding:7px; border-radius:7px; cursor:pointer; font-weight:600; font-size:13px;">
            🗺️ Show on Map
          </button>`

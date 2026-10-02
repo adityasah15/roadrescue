@@ -15,20 +15,20 @@
             --bg-surface: #141729;
             --bg-raised: #1a1f35;
 
-            --stripe-purple: #635bff;
-            --stripe-purple-bright: #7c74ff;
-            --stripe-violet: #7c3aed;
-            --stripe-glow: rgba(99, 91, 255, 0.18);
+            --stripe-purple: #ff8a1e;
+            --stripe-purple-bright: #ffa94d;
+            --stripe-violet: #e06e00;
+            --stripe-glow: rgba(255,138,30, 0.18);
 
-            --primary: #635bff;
-            --primary-hover: #7c74ff;
-            --primary-light: rgba(99, 91, 255, 0.15);
+            --primary: #ff8a1e;
+            --primary-hover: #ffa94d;
+            --primary-light: rgba(255,138,30, 0.15);
 
             --text-main: #eef0ff;
             --text-muted: #5a6080;
             --text-secondary: #a8b0d8;
             --border: rgba(255,255,255,0.08);
-            --border-accent: rgba(99, 91, 255, 0.4);
+            --border-accent: rgba(255,138,30, 0.4);
 
             --success: #10b981;
             --error: #f43f5e;
@@ -76,7 +76,7 @@
 
         .brand-mark { width:44px; height:44px; display:flex; align-items:center; }
 
-        .brand-text { font-family: Arial, sans-serif; font-weight: 900; font-size: 28px; color: #ff6600; letter-spacing: -0.5px; }
+        .brand-text { font-family: Arial, sans-serif; font-weight: 900; font-size: 28px; color: #ff8a1e; letter-spacing: -0.5px; }
 
         .nav-links {
             padding: 24px 16px;
@@ -101,9 +101,9 @@
         }
 
         .nav-link.active {
-            background: linear-gradient(135deg, rgba(99,91,255,0.2), rgba(124,58,237,0.15));
+            background: linear-gradient(135deg, rgba(255,138,30,0.2), rgba(224,110,0,0.15));
             color: var(--stripe-purple-bright);
-            border: 1px solid rgba(99,91,255,0.25);
+            border: 1px solid rgba(255,138,30,0.25);
         }
 
         .nav-link:hover:not(.active) {
@@ -180,7 +180,7 @@
         }
         .stat-card:hover {
             border-color: var(--border-accent);
-            box-shadow: 0 6px 30px rgba(99,91,255,0.15);
+            box-shadow: 0 6px 30px rgba(255,138,30,0.15);
             transform: translateY(-2px);
         }
 
@@ -195,7 +195,7 @@
             flex-shrink: 0;
         }
 
-        .stat-icon.total { background: rgba(99,91,255,0.15); color: var(--stripe-purple-bright); border: 1px solid rgba(99,91,255,0.25); }
+        .stat-icon.total { background: rgba(255,138,30,0.15); color: var(--stripe-purple-bright); border: 1px solid rgba(255,138,30,0.25); }
         .stat-icon.pending { background: rgba(245,158,11,0.12); color: #fbbf24; border: 1px solid rgba(245,158,11,0.2); }
         .stat-icon.accepted { background: rgba(6,182,212,0.12); color: var(--info); border: 1px solid rgba(6,182,212,0.2); }
         .stat-icon.completed { background: rgba(16,185,129,0.12); color: #34d399; border: 1px solid rgba(16,185,129,0.2); }
@@ -274,7 +274,7 @@
         }
 
         tbody tr { transition: background 0.2s; }
-        tbody tr:hover { background: rgba(99,91,255,0.04); }
+        tbody tr:hover { background: rgba(255,138,30,0.04); }
         
         tbody td {
             padding: 16px;
@@ -366,7 +366,7 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
-            box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(99,91,255,0.1);
+            box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,138,30,0.1);
             width: 100%;
             overflow: hidden;
         }
@@ -422,7 +422,7 @@
             outline: none;
             transition: all 0.2s;
         }
-        .popup-field input:focus { border-color: var(--stripe-purple); box-shadow: 0 0 0 3px rgba(99,91,255,0.12); }
+        .popup-field input:focus { border-color: var(--stripe-purple); box-shadow: 0 0 0 3px rgba(255,138,30,0.12); }
 
         .map-label { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
         #mechanicMap { height: 220px; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 10px; }
@@ -442,10 +442,10 @@
             border: none; border-radius: var(--radius-sm);
             font-size: 14px; font-weight: 600; cursor: pointer;
             font-family: var(--font);
-            box-shadow: 0 4px 16px rgba(99,91,255,0.3);
+            box-shadow: 0 4px 16px rgba(255,138,30,0.3);
             transition: all 0.2s;
         }
-        .btn-confirm:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(99,91,255,0.4); }
+        .btn-confirm:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(255,138,30,0.4); }
 
         /* Review Modal Specifics */
         .review-view-pop .modal-head { background: linear-gradient(135deg, var(--stripe-purple), var(--stripe-violet)); border-bottom: none; }
@@ -455,7 +455,7 @@
         .rating-label { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
         .review-text { font-size: 14px; color: var(--text-main); line-height: 1.6; font-style: italic; background: var(--bg-void); border-radius: var(--radius-sm); margin: 0 24px; padding: 16px; border: 1px solid var(--border); }
         .btn-close-rv { margin-top: 24px; padding: 10px 32px; background: rgba(255,255,255,0.06); color: var(--text-secondary); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-        .btn-close-rv:hover { background: rgba(99,91,255,0.15); border-color: var(--border-accent); color: var(--text-main); }
+        .btn-close-rv:hover { background: rgba(255,138,30,0.15); border-color: var(--border-accent); color: var(--text-main); }
 
         @media(max-width: 900px) {
             .sidebar { transform: translateX(-100%); }
@@ -466,6 +466,8 @@
             .stats-grid { grid-template-columns: 1fr; }
         }
     </style>
+    <link rel="stylesheet" href="assets/css/app.css">
+    <script src="assets/js/shell.js" defer></script>
 </head>
 <body>
 
