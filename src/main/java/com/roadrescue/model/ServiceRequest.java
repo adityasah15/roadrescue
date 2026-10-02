@@ -1,0 +1,130 @@
+package com.roadrescue.model;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+public class ServiceRequest {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String customerName;
+    private String phone;
+    private String vehicleNumber;
+    private String issue;
+    private String status;
+    private LocalDateTime createdAt;
+
+    private Double latitude;
+    private Double longitude;
+
+    // Mechanic details
+    private String mechanicName;
+    private String mechanicPhone;
+    private String mechanicEta;
+    private Double mechanicLatitude;
+    private Double mechanicLongitude;
+
+    // Vehicle image (base64)
+    @Column(columnDefinition = "LONGTEXT")
+    private String vehicleImage;
+
+    // Review
+    private Integer reviewRating;
+
+    @Column(columnDefinition = "TEXT")
+    private String reviewComment;
+
+    // ✅ NEW: Shop assignment fields
+    // ID of the shop currently assigned to this request
+    private Long assignedShopId;
+
+    // Comma-separated IDs of shops that already rejected (e.g. "1,3,7")
+    @Column(columnDefinition = "TEXT")
+    private String rejectedShopIds;
+
+    // Stage of assignment:
+    // "ASSIGNED"   → assigned to nearest shop (stage 1 or 2)
+    // "BROADCAST"  → rejected by top 2, now visible to all open shops within 50km
+    // "OPEN"       → nobody nearby, all open shops can see it
+    private String assignmentStage;
+
+    private LocalDateTime lastAssignedAt;
+    private Boolean adminNotified;
+
+    @PrePersist
+    public void onCreate() {
+        if (this.createdAt == null) this.createdAt = LocalDateTime.now();
+        if (this.status == null) this.status = "Pending";
+        if (this.adminNotified == null) this.adminNotified = false;
+        if (this.lastAssignedAt == null) this.lastAssignedAt = LocalDateTime.now();
+    }
+
+    // Getters & Setters
+    public Long getId() { return id; }
+
+    public String getCustomerName() { return customerName; }
+    public void setCustomerName(String customerName) { this.customerName = customerName; }
+
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
+
+    public String getVehicleNumber() { return vehicleNumber; }
+    public void setVehicleNumber(String vehicleNumber) { this.vehicleNumber = vehicleNumber; }
+
+    public String getIssue() { return issue; }
+    public void setIssue(String issue) { this.issue = issue; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
+    public Double getLatitude() { return latitude; }
+    public void setLatitude(Double latitude) { this.latitude = latitude; }
+
+    public Double getLongitude() { return longitude; }
+    public void setLongitude(Double longitude) { this.longitude = longitude; }
+
+    public String getMechanicName() { return mechanicName; }
+    public void setMechanicName(String mechanicName) { this.mechanicName = mechanicName; }
+
+    public String getMechanicPhone() { return mechanicPhone; }
+    public void setMechanicPhone(String mechanicPhone) { this.mechanicPhone = mechanicPhone; }
+
+    public String getMechanicEta() { return mechanicEta; }
+    public void setMechanicEta(String mechanicEta) { this.mechanicEta = mechanicEta; }
+
+    public Double getMechanicLatitude() { return mechanicLatitude; }
+    public void setMechanicLatitude(Double mechanicLatitude) { this.mechanicLatitude = mechanicLatitude; }
+
+    public Double getMechanicLongitude() { return mechanicLongitude; }
+    public void setMechanicLongitude(Double mechanicLongitude) { this.mechanicLongitude = mechanicLongitude; }
+
+    public String getVehicleImage() { return vehicleImage; }
+    public void setVehicleImage(String vehicleImage) { this.vehicleImage = vehicleImage; }
+
+    public Integer getReviewRating() { return reviewRating; }
+    public void setReviewRating(Integer reviewRating) { this.reviewRating = reviewRating; }
+
+    public String getReviewComment() { return reviewComment; }
+    public void setReviewComment(String reviewComment) { this.reviewComment = reviewComment; }
+
+    public Long getAssignedShopId() { return assignedShopId; }
+    public void setAssignedShopId(Long assignedShopId) { this.assignedShopId = assignedShopId; }
+
+    public String getRejectedShopIds() { return rejectedShopIds; }
+    public void setRejectedShopIds(String rejectedShopIds) { this.rejectedShopIds = rejectedShopIds; }
+
+    public String getAssignmentStage() { return assignmentStage; }
+    public void setAssignmentStage(String assignmentStage) { this.assignmentStage = assignmentStage; }
+
+    public LocalDateTime getLastAssignedAt() { return lastAssignedAt; }
+    public void setLastAssignedAt(LocalDateTime lastAssignedAt) { this.lastAssignedAt = lastAssignedAt; }
+
+    public Boolean getAdminNotified() { return adminNotified; }
+    public void setAdminNotified(Boolean adminNotified) { this.adminNotified = adminNotified; }
+}
