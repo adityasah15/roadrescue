@@ -21,6 +21,12 @@ The intelligent platform connecting stranded drivers with professional mechanics
 ### 🔐 Login Page
 ![Login](src/main/resources/static/assets/screenshots/login.png)
 
+### ℹ️ About
+![About](src/main/resources/static/assets/screenshots/about.png)
+
+### ✉️ Contact
+![Contact](src/main/resources/static/assets/screenshots/contact.png)
+
 ### 👤 Customer Dashboard
 ![Customer Dashboard](src/main/resources/static/assets/screenshots/customer.png)
 
@@ -30,8 +36,14 @@ The intelligent platform connecting stranded drivers with professional mechanics
 ### 🔧 Shop Dashboard
 ![Shop Dashboard](src/main/resources/static/assets/screenshots/shop.png)
 
-### 🛡️ Admin — Analytics Dashboard
-![Admin Analytics](src/main/resources/static/assets/screenshots/admin.png)
+### 🛡️ Admin — Requests Dashboard
+![Admin](src/main/resources/static/assets/screenshots/admin.png)
+
+### 📊 Admin — Analytics
+![Admin Analytics](src/main/resources/static/assets/screenshots/analytics.png)
+
+### 🗺️ Nearby Shops Map
+![Shops Map](src/main/resources/static/assets/screenshots/map.png)
 
 ---
 
