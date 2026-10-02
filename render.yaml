@@ -1,0 +1,32 @@
+# Render Blueprint for RoadRescue
+# Docs: https://render.com/docs/blueprint-spec
+#
+# Deploys the Spring Boot app as a Docker web service.
+# The database is external MySQL (e.g. Aiven always-free) — set the
+# DB_* variables in the Render dashboard when prompted (sync: false).
+#
+# After the service is live, optionally set SEED_DEMO_DATA=true once
+# to load the bundled sample accounts, then set it back to false.
+
+services:
+  - type: web
+    name: roadrescue
+    runtime: docker
+    plan: free
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: DB_URL
+        sync: false          # e.g. jdbc:mysql://<host>:<port>/defaultdb?useSSL=false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false          # optional — emails are skipped if unset
+      - key: SEED_DEMO_DATA
+        value: "false"       # set to "true" once to load demo data
+      - key: JAVA_TOOL_OPTIONS
+        value: "-XX:MaxRAMPercentage=75.0"

@@ -27,6 +27,7 @@ services:
       DB_PASSWORD: ${DB_PASSWORD:-roadrescue123}
       RESEND_API_KEY: ${RESEND_API_KEY:-re_dummy_key}
       ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@roadrescue.local}
+      SEED_DEMO_DATA: ${SEED_DEMO_DATA:-false}
       PORT: 8082
     ports:
       - "8082:8082"

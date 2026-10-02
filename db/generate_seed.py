@@ -195,5 +195,12 @@ out_dir = os.path.dirname(os.path.abspath(__file__))
 with open(os.path.join(out_dir, "seed.sql"), "w") as f:
     f.write("\n".join(lines) + "\n")
 
+# Also emit to the classpath so the app can seed itself on first boot
+resource_dir = os.path.join(out_dir, "..", "src", "main", "resources", "db")
+os.makedirs(resource_dir, exist_ok=True)
+with open(os.path.join(resource_dir, "seed.sql"), "w") as f:
+    f.write("\n".join(lines) + "\n")
+
 print("Wrote", os.path.join(out_dir, "seed.sql"))
+print("Wrote", os.path.join(resource_dir, "seed.sql"))
 print("customers:", len(customers), "shops:", len(shop_defs), "requests:", len(plan))
