@@ -17,7 +17,7 @@ services:
     autoDeploy: true
     envVars:
       - key: DB_URL
-        sync: false          # e.g. jdbc:mysql://<host>:<port>/defaultdb?useSSL=false
+        sync: false          # e.g. jdbc:mysql://mysql-roadrescue-roadrescue.f.aivencloud.com:19391/defaultdb?useSSL=false&sslMode=REQUIRED
       - key: DB_USERNAME
         sync: false
       - key: DB_PASSWORD
