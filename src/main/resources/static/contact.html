@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoadRescue — Contact</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/app.css">
+<script src="assets/js/shell.js" defer></script>
+<style>
+  .rr-topnav {
+    position: sticky; top: 0; z-index: 500;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 28px; height: 64px;
+    background: rgba(13,18,30,0.72);
+    backdrop-filter: blur(16px) saturate(140%);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .rr-topnav-brand { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+  .rr-topnav-mark {
+    width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center;
+    font-size: 18px; background: linear-gradient(135deg, var(--stripe-glow-strong), rgba(20,184,166,0.25));
+    border: 1px solid var(--border-accent);
+  }
+  .rr-topnav-brand span {
+    font-family: var(--font-display); font-weight: 800; font-size: 18px;
+    color: var(--text-primary); letter-spacing: -0.4px;
+  }
+  .rr-topnav-nav { display: flex; gap: 6px; align-items: center; }
+  .rr-topnav-nav a {
+    color: var(--text-secondary); text-decoration: none; font-size: 13.5px;
+    font-weight: 600; padding: 8px 12px; border-radius: 8px; transition: all .16s ease;
+  }
+  .rr-topnav-nav a:hover, .rr-topnav-nav a.active { color: #fff; background: rgba(255,255,255,0.05); }
+  .rr-topnav-nav a.active { color: var(--stripe-purple-bright); }
+
+  .rr-contact-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px; align-items: start; }
+  .rr-contact .rr-card {
+    background: var(--bg-card); border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg); padding: 28px;
+  }
+  .rr-info-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--border-subtle); }
+  .rr-info-item:last-child { border-bottom: none; }
+  .rr-info-ic {
+    width: 40px; height: 40px; flex-shrink: 0; border-radius: 11px; display: grid; place-items: center;
+    font-size: 18px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle);
+  }
+  .rr-info-item .t { font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--text-primary); }
+  .rr-info-item .d { font-size: 13px; color: var(--text-muted); margin-top: 2px; line-height: 1.6; }
+  .rr-info-item a { color: var(--stripe-purple-bright); text-decoration: none; }
+
+  .rr-faq { padding: 16px 0; border-bottom: 1px solid var(--border-subtle); }
+  .rr-faq:last-child { border-bottom: none; }
+  .rr-faq .q { font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--text-primary); margin-bottom: 5px; }
+  .rr-faq .a { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+
+  .rr-submit {
+    grid-column: 1 / -1;
+  }
+  @media (max-width: 820px) { .rr-contact-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="rr-page">
+
+  <nav class="rr-topnav">
+    <a href="index.html" class="rr-topnav-brand">
+      <div class="rr-topnav-mark">🛟</div>
+      <span>RoadRescue</span>
+    </a>
+    <div class="rr-topnav-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" class="active">Contact</a>
+      <a href="nova.html">Nova</a>
+    </div>
+  </nav>
+
+  <header class="rr-hero" style="padding-bottom:24px;">
+    <div class="rr-eyebrow">Get in touch</div>
+    <h1 class="rr-h1">We'd love to <span>hear from you.</span></h1>
+    <p class="rr-lead">
+      Questions, feedback, or a breakdown on the road? Send us a message and
+      we'll get back to you as soon as we can.
+    </p>
+  </header>
+
+  <div class="rr-wrap">
+    <div class="rr-contact-grid rr-contact">
+
+      <div class="rr-card">
+        <h2 style="font-family:var(--font-display);font-size:18px;margin-bottom:10px;color:var(--text-primary);">Send a message</h2>
+        <form id="contactForm" novalidate>
+          <div class="row">
+            <div>
+              <label for="cName">Your name</label>
+              <input type="text" id="cName" placeholder="Jane Doe" required>
+            </div>
+            <div>
+              <label for="cEmail">Email</label>
+              <input type="email" id="cEmail" placeholder="jane@example.com" required>
+            </div>
+          </div>
+          <div>
+            <label for="cSubject">Subject</label>
+            <input type="text" id="cSubject" placeholder="How can we help?">
+          </div>
+          <div>
+            <label for="cMessage">Message</label>
+            <textarea id="cMessage" placeholder="Tell us what's on your mind..." required></textarea>
+          </div>
+          <p id="cMsg" style="font-size:13px;color:var(--text-muted);margin:-4px 0 0;"></p>
+          <button type="submit" class="btn-primary rr-submit" style="padding:13px;border-radius:10px;font-family:var(--font-display);font-size:14px;cursor:pointer;">
+            Send Message
+          </button>
+        </form>
+      </div>
+
+      <div style="display:grid;gap:24px;">
+        <div class="rr-card">
+          <h2 style="font-family:var(--font-display);font-size:18px;margin-bottom:8px;color:var(--text-primary);">Contact details</h2>
+          <div class="rr-info-item">
+            <div class="rr-info-ic">📧</div>
+            <div><div class="t">Email</div><div class="d"><a href="mailto:hello@roadrescue.local">hello@roadrescue.local</a></div></div>
+          </div>
+          <div class="rr-info-item">
+            <div class="rr-info-ic">📞</div>
+            <div><div class="t">Support Helpline</div><div class="d">NH 1033 · Emergency 112</div></div>
+          </div>
+          <div class="rr-info-item">
+            <div class="rr-info-ic">📍</div>
+            <div><div class="t">Service Area</div><div class="d">Pune, Maharashtra — expanding across India</div></div>
+          </div>
+          <div class="rr-info-item">
+            <div class="rr-info-ic">🕐</div>
+            <div><div class="t">Hours</div><div class="d">Platform: 24×7 · Support desk: 9:00–21:00 IST</div></div>
+          </div>
+        </div>
+
+        <div class="rr-card">
+          <h2 style="font-family:var(--font-display);font-size:18px;margin-bottom:8px;color:var(--text-primary);">Quick answers</h2>
+          <div class="rr-faq">
+            <div class="q">How do I request help?</div>
+            <div class="a">Log in as a customer, enter your vehicle and issue, pick your location, and submit. The nearest open shop is assigned automatically.</div>
+          </div>
+          <div class="rr-faq">
+            <div class="q">Do I need internet for Nova?</div>
+            <div class="a">No — Nova works completely offline and covers 50+ common roadside problems right on your device.</div>
+          </div>
+          <div class="rr-faq">
+            <div class="q">I own a shop. Can I join?</div>
+            <div class="a">Yes. Register as a service partner from the home page with your branch locations and opening hours.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+  document.getElementById("contactForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = document.getElementById("cName").value.trim();
+    var email = document.getElementById("cEmail").value.trim();
+    var message = document.getElementById("cMessage").value.trim();
+    var el = document.getElementById("cMsg");
+
+    if (!name || !email || !message) {
+      el.textContent = "Please fill in your name, email and message.";
+      el.style.color = "#fb7185";
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      el.textContent = "Please enter a valid email address.";
+      el.style.color = "#fb7185";
+      return;
+    }
+
+    // Front-end only demo: no backend endpoint for contact messages.
+    el.textContent = "";
+    if (window.showToast) window.showToast("Thanks, " + name + "! Your message has been noted.", "ok");
+    this.reset();
+  });
+</script>
+</body>
+</html>

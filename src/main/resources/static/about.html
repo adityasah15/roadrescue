@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoadRescue — About</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/app.css">
+<script src="assets/js/shell.js" defer></script>
+<style>
+  .rr-topnav {
+    position: sticky; top: 0; z-index: 500;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 28px; height: 64px;
+    background: rgba(13,18,30,0.72);
+    backdrop-filter: blur(16px) saturate(140%);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .rr-topnav-brand { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+  .rr-topnav-mark {
+    width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center;
+    font-size: 18px; background: linear-gradient(135deg, var(--stripe-glow-strong), rgba(20,184,166,0.25));
+    border: 1px solid var(--border-accent);
+  }
+  .rr-topnav-brand span {
+    font-family: var(--font-display); font-weight: 800; font-size: 18px;
+    color: var(--text-primary); letter-spacing: -0.4px;
+  }
+  .rr-topnav-nav { display: flex; gap: 6px; align-items: center; }
+  .rr-topnav-nav a {
+    color: var(--text-secondary); text-decoration: none; font-size: 13.5px;
+    font-weight: 600; padding: 8px 12px; border-radius: 8px; transition: all .16s ease;
+  }
+  .rr-topnav-nav a:hover, .rr-topnav-nav a.active { color: #fff; background: rgba(255,255,255,0.05); }
+  .rr-topnav-nav a.active { color: var(--stripe-purple-bright); }
+  .rr-section-title {
+    font-family: var(--font-display); font-size: 22px; font-weight: 800;
+    color: var(--text-primary); margin: 52px 0 18px; letter-spacing: -0.5px;
+  }
+  .rr-stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; }
+  .rr-stat {
+    text-align: center; padding: 24px 16px; border-radius: var(--radius-lg);
+    background: var(--bg-card); border: 1px solid var(--border-subtle);
+  }
+  .rr-stat b { display: block; font-family: var(--font-display); font-size: 30px; font-weight: 800; color: var(--stripe-purple-bright); }
+  .rr-stat span { font-size: 12.5px; color: var(--text-muted); }
+  .rr-team-card {
+    display: flex; align-items: center; gap: 16px; padding: 22px;
+    background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);
+    transition: transform .28s var(--rr-ease), border-color .28s var(--rr-ease);
+  }
+  .rr-team-card:hover { transform: translateY(-4px); border-color: var(--border-accent); }
+  .rr-team-card .name { font-family: var(--font-display); font-weight: 700; font-size: 16px; color: var(--text-primary); }
+  .rr-team-card .role { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="rr-page">
+
+  <nav class="rr-topnav">
+    <a href="index.html" class="rr-topnav-brand">
+      <div class="rr-topnav-mark">🛟</div>
+      <span>RoadRescue</span>
+    </a>
+    <div class="rr-topnav-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="nova.html">Nova</a>
+    </div>
+  </nav>
+
+  <header class="rr-hero">
+    <div class="rr-eyebrow">About RoadRescue</div>
+    <h1 class="rr-h1">Roadside help that <span>actually shows up.</span></h1>
+    <p class="rr-lead">
+      RoadRescue connects stranded drivers with nearby professional mechanics —
+      in real time, transparently, and without the guesswork. One request finds the
+      nearest available shop, tracks the mechanic live, and keeps everyone informed.
+    </p>
+  </header>
+
+  <div class="rr-wrap">
+    <div class="rr-stat-row">
+      <div class="rr-stat"><b>24×7</b><span>Nova offline assistant</span></div>
+      <div class="rr-stat"><b>50+</b><span>Roadside problems covered</span></div>
+      <div class="rr-stat"><b>Live</b><span>Mechanic tracking</span></div>
+      <div class="rr-stat"><b>3</b><span>Role-based dashboards</span></div>
+    </div>
+
+    <h2 class="rr-section-title">What we do</h2>
+    <div class="rr-grid">
+      <div class="rr-tile">
+        <div class="ic">📍</div>
+        <h3>Find the nearest help</h3>
+        <p>Your location is matched to the closest open shop, with automatic reassignment if a shop can't take the job.</p>
+      </div>
+      <div class="rr-tile">
+        <div class="ic">🚗</div>
+        <h3>Track every step</h3>
+        <p>Live status updates and mechanic location sharing, so you're never left wondering when help will arrive.</p>
+      </div>
+      <div class="rr-tile">
+        <div class="ic">🏪</div>
+        <h3>Empower local shops</h3>
+        <p>Mechanics receive, accept, and manage requests with date-filtered reports and PDF exports.</p>
+      </div>
+      <div class="rr-tile">
+        <div class="ic">🛡️</div>
+        <h3>Admin oversight</h3>
+        <p>A full analytics dashboard keeps the platform healthy — requests, shops, and performance at a glance.</p>
+      </div>
+      <div class="rr-tile">
+        <div class="ic">🤖</div>
+        <h3>Nova, always online</h3>
+        <p>An offline chatbot covering 50+ common vehicle problems, with one-tap helpline calling when you need it.</p>
+      </div>
+      <div class="rr-tile">
+        <div class="ic">🔒</div>
+        <h3>Secure by design</h3>
+        <p>JWT-based sessions, BCrypt password hashing, and role-based access across customers, shops, and admins.</p>
+      </div>
+    </div>
+
+    <h2 class="rr-section-title">Built with</h2>
+    <div class="rr-grid">
+      <div class="rr-tile"><h3>Backend</h3><p>Java 17 · Spring Boot 3 · Spring Security · Spring Data JPA</p></div>
+      <div class="rr-tile"><h3>Data</h3><p>MySQL 8 with Hibernate ORM</p></div>
+      <div class="rr-tile"><h3>Frontend</h3><p>HTML5 · CSS3 · Vanilla JavaScript</p></div>
+      <div class="rr-tile"><h3>Maps</h3><p>Leaflet.js + OpenStreetMap</p></div>
+      <div class="rr-tile"><h3>Email</h3><p>Resend transactional email</p></div>
+      <div class="rr-tile"><h3>Deployment</h3><p>Docker · any cloud or VPS</p></div>
+    </div>
+
+    <h2 class="rr-section-title">The team</h2>
+    <div class="rr-grid">
+      <div class="rr-team-card">
+        <div class="rr-avatar">AS</div>
+        <div>
+          <div class="name">Aditya Sah</div>
+          <div class="role">Team Member</div>
+        </div>
+      </div>
+      <div class="rr-team-card">
+        <div class="rr-avatar">AP</div>
+        <div>
+          <div class="name">Aniket Pandey</div>
+          <div class="role">Team Member</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="rr-section-title">Open source</h2>
+    <p class="rr-lead" style="text-align:left; margin:0;">
+      RoadRescue is released under the <strong>MIT License</strong>. The full source,
+      setup instructions, and sample data are available in the project repository.
+      See the footer for details or head to the <a href="contact.html" style="color:var(--stripe-purple-bright);">contact page</a>.
+    </p>
+  </div>
+
+</div>
+</body>
+</html>
