@@ -165,7 +165,13 @@
     var targets = document.querySelectorAll(
       ".card, .stat-card, .rr-tile, .section-header, .rr-hero > *"
     );
-    if (!("IntersectionObserver" in window)) return;
+
+    function revealAll() {
+      targets.forEach(function (t) { t.classList.add("rr-reveal", "rr-in"); });
+    }
+
+    if (!("IntersectionObserver" in window)) { revealAll(); return; }
+
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (en.isIntersecting) {
@@ -175,6 +181,10 @@
       });
     }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
     targets.forEach(function (t) { t.classList.add("rr-reveal"); io.observe(t); });
+
+    // Safety net: never leave content invisible if the observer misses it
+    // (fast scroll, print, unusual viewport, headless capture, etc.).
+    setTimeout(revealAll, 1400);
   }
 
   /* ── Animated counters for stat values ───────────────── */

@@ -396,6 +396,47 @@ tbody tr:hover { background: rgba(255,138,30,0.05) !important; }
 .rr-contact textarea { min-height: 130px; resize: vertical; }
 
 /* =====================================================================
+   DASHBOARD CENTERING
+   Sidebar pages hug the left edge because .main-content uses
+   margin-left: 260px + max-width. Recenter the content column within
+   the available space while preserving the fixed sidebar.
+   ===================================================================== */
+@media (min-width: 901px) {
+  body:has(.sidebar) .main-content {
+    margin-left: 260px;
+    margin-right: auto;
+    max-width: 1200px;
+    width: 100%;
+  }
+}
+/* Give the content column comfortable, even padding on large screens */
+@media (min-width: 1201px) {
+  .main-content {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+}
+
+/* Customer / shop pages: keep the wrapper centered and breathe */
+.page { margin-left: auto; margin-right: auto; }
+
+/* Nova: constrain the two-column chat surface and center it */
+@media (min-width: 901px) {
+  .page-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+/* Footer inside a dashboard content column should not be full-bleed */
+.main-content .rr-footer {
+  max-width: 100%;
+  border-radius: var(--radius-lg);
+  margin-top: 40px;
+}
+
+/* =====================================================================
    RESPONSIVE
    ===================================================================== */
 @media (max-width: 720px) {
