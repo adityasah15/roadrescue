@@ -630,7 +630,7 @@ body {
           <h3 id="chatHeaderTitle">Problem</h3>
           <p id="chatHeaderSub">Nova is helping you</p>
         </div>
-        <button class="btn-home" onclick="showWelcome()">🏠 All Topics</button>
+        <button class="btn-home" onclick="startConversation()">🏠 All Topics</button>
       </div>
       <div class="messages" id="messages"></div>
       <div class="input-bar">
@@ -1368,7 +1368,90 @@ function showChat() {
 }
 
 // ════════════════════════════════════════════════════════
-// OPEN A PROBLEM
+// CONVERSATION FLOW — categories → sub-problems → steps
+// ════════════════════════════════════════════════════════
+// Start (on load / greeting): greet and list all available
+// top-level options (categories).
+function startConversation() {
+  showChat();
+  document.getElementById('chatHeaderIcon').textContent = '🤖';
+  document.getElementById('chatHeaderTitle').textContent = 'Nova';
+  document.getElementById('chatHeaderSub').textContent = 'Choose a problem category';
+
+  document.querySelectorAll('.cat-item').forEach(el => el.classList.remove('active'));
+
+  const msgs = document.getElementById('messages');
+  msgs.innerHTML = '';
+
+  addBotMessage(`
+    <div style="font-size:15px; font-weight:600; margin-bottom:6px;">👋 Hi! I'm Nova.</div>
+    <div style="font-size:13.5px; color:var(--text-secondary); line-height:1.6;">
+      What kind of problem are you facing? Pick a category below.
+    </div>
+  `);
+  showCategories();
+}
+
+// Bot bubble listing every category as a clickable option.
+function showCategories() {
+  let html = `<div style="font-size:13px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:10px;">Available Problems</div>`;
+  html += `<div class="step-buttons" style="margin-top:0;">`;
+  KB.categories.forEach(cat => {
+    html += `<button class="step-btn" onclick="openCategory('${cat.id}')">${cat.icon} ${cat.label}</button>`;
+  });
+  html += `</div>`;
+  addBotMessage(html);
+}
+
+// Step 2: user picks a category → list its sub-problems.
+function openCategory(catId) {
+  const cat = KB.categories.find(c => c.id === catId);
+  if (!cat) return;
+
+  document.getElementById('chatHeaderIcon').textContent = cat.icon;
+  document.getElementById('chatHeaderTitle').textContent = cat.label;
+  document.getElementById('chatHeaderSub').textContent = 'Pick the exact problem';
+
+  addUserMessage(cat.label);
+
+  let html = `<div style="font-size:13.5px; color:var(--text-secondary); line-height:1.6; margin-bottom:10px;">Here are the <b>${cat.label}</b>. Select the one that matches your situation:</div>`;
+  html += `<div class="step-buttons" style="margin-top:0;">`;
+  cat.problems.forEach(p => {
+    html += `<button class="step-btn" onclick="chooseProblem('${p.id}')">${p.icon} ${p.title}</button>`;
+  });
+  html += `</div>`;
+  addBotMessage(html);
+}
+
+// Step 3: user picks a sub-problem → show its information/steps.
+// Appends to the thread so the conversation is preserved.
+function chooseProblem(problemId) {
+  const p = allProblems.find(x => x.id === problemId);
+  if (!p) return;
+
+  // Sidebar highlight (if visible)
+  document.querySelectorAll('.cat-item').forEach(el => el.classList.remove('active'));
+  const catEl = document.getElementById('cat_' + problemId);
+  if (catEl) catEl.classList.add('active');
+
+  document.getElementById('chatHeaderIcon').textContent = p.icon;
+  document.getElementById('chatHeaderTitle').textContent = p.title;
+  document.getElementById('chatHeaderSub').textContent = 'Nova is guiding you';
+
+  addUserMessage(p.title);
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    addBotMessage(buildSolutionHTML(p));
+  }, 400);
+}
+
+function isGreeting(text) {
+  return /^(hi+|hey+|hello+|yo|start|menu|help|\?)$/i.test(text.trim());
+}
+
+// ════════════════════════════════════════════════════════
+// OPEN A PROBLEM (direct jump — sidebar / quick cards)
 // ════════════════════════════════════════════════════════
 function openProblem(problemId) {
   const p = allProblems.find(x => x.id === problemId);
@@ -1389,7 +1472,8 @@ function openProblem(problemId) {
   const msgs = document.getElementById('messages');
   msgs.innerHTML = '';
 
-  // Bot intro message
+  // Echo the picked problem, then show the solution
+  addUserMessage(p.title);
   addBotMessage(buildSolutionHTML(p));
   msgs.scrollTop = msgs.scrollHeight;
 }
@@ -1434,6 +1518,7 @@ function buildSolutionHTML(p) {
     <span class="feedback-label">Was this helpful?</span>
     <button class="fb-btn" onclick="this.textContent='👍 Thanks!'; this.style.color='var(--success)'">👍 Yes</button>
     <button class="fb-btn" onclick="showRelated()">🔄 See Related</button>
+    <button class="fb-btn" onclick="startConversation()">🏠 All Topics</button>
   </div>`;
 
   return html;
@@ -1503,6 +1588,12 @@ function sendMessage() {
   if (!text) return;
   input.value = '';
 
+  // Greetings reset the conversation back to the category menu
+  if (isGreeting(text)) {
+    startConversation();
+    return;
+  }
+
   // If not in chat screen, switch to it
   showChat();
   document.getElementById('chatHeaderIcon').textContent = '🔍';
@@ -1524,19 +1615,19 @@ function sendMessage() {
     if (matches.length === 0) {
       addBotMessage(`
         <div style="font-size:14px;">I couldn't find an exact match for "<b>${escHtml(text)}</b>".</div>
-        <div style="font-size:13px; color:var(--text-muted); margin-top:8px; line-height:1.6;">Try different keywords like "flat tyre", "fuel empty", "engine hot", "battery dead", or browse categories on the left.</div>
+        <div style="font-size:13px; color:var(--text-muted); margin-top:8px; line-height:1.6;">Try different keywords like "flat tyre", "fuel empty", "engine hot", "battery dead", or browse categories below.</div>
         <div class="step-buttons" style="margin-top:12px;">
+          <button class="step-btn" onclick="showCategories()">📋 Browse all categories</button>
           <button class="step-btn" onclick="openProblem('all_helplines')">📞 View all emergency helplines</button>
-          <button class="step-btn" onclick="showWelcome()">🏠 Browse all topics</button>
         </div>
       `);
     } else if (matches.length === 1) {
-      openProblem(matches[0].id);
+      chooseProblem(matches[0].id);
     } else {
       let html = `<div style="font-size:14px; margin-bottom:12px;">Found <b>${matches.length}</b> results for "<b>${escHtml(text)}</b>" — which one?</div>`;
-      html += `<div class="step-buttons">`;
+      html += `<div class="step-buttons" style="margin-top:0;">`;
       matches.slice(0, 6).forEach(m => {
-        html += `<button class="step-btn" onclick="openProblem('${m.id}')">${m.icon} ${m.title}</button>`;
+        html += `<button class="step-btn" onclick="chooseProblem('${m.id}')">${m.icon} ${m.title}</button>`;
       });
       html += `</div>`;
       addBotMessage(html);
@@ -1549,9 +1640,9 @@ function sendMessage() {
 // ════════════════════════════════════════════════════════
 function showRelated() {
   const sample = allProblems.filter(p => p.id !== 'all_helplines').sort(() => Math.random() - 0.5).slice(0, 4);
-  let html = `<div style="font-size:14px; margin-bottom:10px;">You might also need:</div><div class="step-buttons">`;
+  let html = `<div style="font-size:14px; margin-bottom:10px;">You might also need:</div><div class="step-buttons" style="margin-top:0;">`;
   sample.forEach(p => {
-    html += `<button class="step-btn" onclick="openProblem('${p.id}')">${p.icon} ${p.title}</button>`;
+    html += `<button class="step-btn" onclick="chooseProblem('${p.id}')">${p.icon} ${p.title}</button>`;
   });
   html += `</div>`;
   addBotMessage(html);
@@ -1563,19 +1654,8 @@ function showRelated() {
 renderSidebar();
 renderQuickGrid();
 
-// Greet
-setTimeout(() => {
-  const msgs = document.getElementById('messages');
-  if (msgs) {
-    addBotMessage(`
-      <div style="font-size:15px; font-weight:600; margin-bottom:6px;">👋 Hello! I'm Nova.</div>
-      <div style="font-size:13.5px; color:var(--text-secondary); line-height:1.6;">
-        I work <b>completely offline</b> and can help you with 55+ roadside problems — from a flat tyre to fuel emergency to brake failure.<br><br>
-        Pick a topic from the left, tap a quick card above, or just type your problem here.
-      </div>
-    `);
-  }
-}, 100);
+// Greet and show the category menu
+startConversation();
 </script>
 </body>
 </html>

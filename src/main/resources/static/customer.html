@@ -1138,6 +1138,29 @@ function viewReview(rating, comment) {
 }
 
 function logout() { localStorage.clear(); window.location.href = "index.html"; }
+
+// Intercept browser back button — ask whether the user wants to sign out
+history.pushState({ onCustomerPage: true }, "");
+window.addEventListener("popstate", function (e) {
+  const signOut = confirm("Do you want to sign out?\n\nClick OK to sign out, or Cancel to stay on this page.");
+  if (signOut) {
+    localStorage.clear();
+    window.location.href = "index.html";
+  } else {
+    // Stay on the same page
+    history.pushState({ onCustomerPage: true }, "");
+  }
+});
+
+// Prevent cached page from showing stale logged-in state when using forward arrow
+window.addEventListener("pageshow", function (e) {
+  if (e.persisted) {
+    const u = localStorage.getItem("username");
+    const r = localStorage.getItem("role");
+    if (!u || r !== "CUSTOMER") { window.location.href = "index.html"; }
+  }
+});
+
 fetchReqs();
 
 function formatIST(dtStr) {
