@@ -547,6 +547,8 @@
                         <th>Vehicle</th>
                         <th>Issue</th>
                         <th>Location</th>
+                        <th>Current Shop</th>
+                        <th>Next Available Shop</th>
                         <th>Status</th>
                         <th>Submitted At</th>
                         <th>Image</th>
@@ -624,6 +626,24 @@ const API = "";
 const role = localStorage.getItem("role");
 if (!role || role !== "ADMIN") { alert("Access denied!"); window.location.href = "index.html"; }
 
+// Intercept browser back button — ask whether the admin wants to sign out
+history.pushState({ onAdminPage: true }, "");
+window.addEventListener("popstate", function () {
+    const signOut = confirm("Do you want to sign out?\n\nClick OK to sign out, or Cancel to stay on this page.");
+    if (signOut) {
+        localStorage.clear();
+        window.location.href = "index.html";
+    } else {
+        history.pushState({ onAdminPage: true }, "");
+    }
+});
+
+window.addEventListener("pageshow", function (e) {
+    if (e.persisted && localStorage.getItem("role") !== "ADMIN") {
+        window.location.href = "index.html";
+    }
+});
+
 let currentRequestId = null, mechanicLat = null, mechanicLng = null;
 let mechanicMapInstance = null, mechanicMarker = null;
 let allRequests = [];
@@ -637,17 +657,32 @@ function showVehicleImage(id) {
     }
 }
 
-function fetchRequests() {
-    fetch(API + "/api/requests")
-    .then(res => res.json())
-    .then(data => {
+let requestRefreshInProgress = false;
+function fetchRequests(showErrors = true) {
+    if (requestRefreshInProgress) return;
+    requestRefreshInProgress = true;
+
+    Promise.all([
+        fetch(API + "/api/requests").then(res => {
+            if (!res.ok) throw new Error("Failed to load requests.");
+            return res.json();
+        }),
+        fetch(API + "/api/shop/admin/assignment-info").then(res => {
+            if (!res.ok) throw new Error("Failed to load shop assignments.");
+            return res.json();
+        })
+    ])
+    .then(([data, assignments]) => {
         allRequests = data;
+        const assignmentsByRequest = new Map(
+            assignments.map(info => [info.requestId, info])
+        );
         const tbody = document.querySelector("#adminTable tbody");
         tbody.innerHTML = "";
         let pending=0, accepted=0, completed=0;
         
         if (!data.length) {
-            tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;color:var(--text-muted);padding:40px">No requests yet.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="13" style="text-align:center;color:var(--text-muted);padding:40px">No requests yet.</td></tr>';
             document.getElementById("s-total").innerText = 0;
             document.getElementById("s-pending").innerText = 0;
             document.getElementById("s-accepted").innerText = 0;
@@ -678,6 +713,9 @@ function fetchRequests() {
 
             const loc = req.latitude ? `${req.latitude.toFixed(4)}, ${req.longitude.toFixed(4)}` : 'N/A';
             const ist = formatIST(req.createdAt);
+            const assignment = assignmentsByRequest.get(req.id);
+            const currentShop = assignment ? assignment.currentShop : '—';
+            const nextShop = assignment ? assignment.nextAvailableShop : '—';
 
             let imageCol = '<span style="color:var(--border)">—</span>';
             if (req.vehicleImage) {
@@ -702,6 +740,8 @@ function fetchRequests() {
                 <td>${req.vehicleNumber}</td>
                 <td>${req.issue}</td>
                 <td style="color:var(--text-muted)">${loc}</td>
+                <td>${escapeHtml(currentShop)}</td>
+                <td>${escapeHtml(nextShop)}</td>
                 <td><span class="badge ${sc}">${req.status}</span></td>
                 <td style="color:var(--text-muted)">${ist}</td>
                 <td>${imageCol}</td>
@@ -715,7 +755,23 @@ function fetchRequests() {
         document.getElementById("s-accepted").innerText = accepted;
         document.getElementById("s-completed").innerText = completed;
     })
-    .catch(() => alert("Failed to load requests."));
+    .catch(error => {
+        console.error("Failed to load requests and shop assignment information.", error);
+        if (showErrors) alert("Failed to load requests and shop assignment information.");
+    })
+    .finally(() => {
+        requestRefreshInProgress = false;
+    });
+}
+
+function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, character => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    })[character]);
 }
 
 function forwardToNextShop(id) {
@@ -806,6 +862,7 @@ function goToShops() { window.location.href = "shops.html"; }
 function logout() { localStorage.clear(); window.location.href = "index.html"; }
 
 fetchRequests();
+setInterval(() => fetchRequests(false), 15000);
 
 function formatIST(dtStr) {
     const utc = new Date(dtStr + 'Z');

@@ -720,6 +720,7 @@ async function doLogin(button) {
         document.getElementById('lPass').value = '';
         localStorage.setItem('username', user.username);
         localStorage.setItem('role', user.role);
+        localStorage.setItem('token', user.token);
         window.location.href = 'customer.html';
     } catch (e) {
         setMsg('lMsg', e.message, 'err');

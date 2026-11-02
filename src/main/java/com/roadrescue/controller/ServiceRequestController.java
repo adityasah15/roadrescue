@@ -10,6 +10,7 @@ import com.roadrescue.service.ShopService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -47,8 +48,36 @@ public class ServiceRequestController {
     }
 
     @GetMapping("/customer/{username}")
-    public List<ServiceRequest> getRequestsByUser(@PathVariable String username) {
-        return requestRepository.findByCustomerName(username);
+    public ResponseEntity<?> getRequestsByUser(
+            @PathVariable String username,
+            Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(401).body("Please sign in to view your requests.");
+        }
+
+        boolean isCustomer = authentication.getAuthorities().stream()
+                .anyMatch(authority -> "ROLE_CUSTOMER".equals(authority.getAuthority()));
+        if (!isCustomer) {
+            return ResponseEntity.status(401).body("Please sign in as a customer to view your requests.");
+        }
+        if (!authentication.getName().equals(username)) {
+            return ResponseEntity.status(403).body("You can only view your own requests.");
+        }
+
+        Map<Long, Shop> shopsById = shopRepository.findAll().stream()
+                .collect(Collectors.toMap(Shop::getId, shop -> shop));
+        List<ServiceRequest> requests = requestRepository.findByCustomerName(authentication.getName());
+        requests.forEach(request -> {
+            Shop assignedShop = shopsById.get(request.getAssignedShopId());
+            if (assignedShop != null) {
+                String shopName = assignedShop.getShopName();
+                request.setAssignedShopName(
+                        shopName == null || shopName.isBlank()
+                                ? assignedShop.getUsername()
+                                : shopName);
+            }
+        });
+        return ResponseEntity.ok(requests);
     }
 
     @PostMapping
@@ -299,6 +328,5 @@ public class ServiceRequestController {
         return list.stream().collect(Collectors.groupingBy(ServiceRequest::getStatus, Collectors.counting()));
     }
 
-    // ========== SHARED HELPERS ==========
-    // Removed because these are now in ShopService
+    
 }

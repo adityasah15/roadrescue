@@ -585,6 +585,28 @@ const role = localStorage.getItem("role");
 
 if (!sUser || role !== "SHOP_OWNER") { alert("Access denied!"); window.location.href = "index.html"; }
 
+// Intercept browser back button — ask whether the shop owner wants to sign out
+history.pushState({ onShopPage: true }, "");
+window.addEventListener("popstate", function () {
+    const signOut = confirm("Do you want to sign out?\n\nClick OK to sign out, or Cancel to stay on this page.");
+    if (signOut) {
+        localStorage.clear();
+        window.location.href = "index.html";
+    } else {
+        history.pushState({ onShopPage: true }, "");
+    }
+});
+
+window.addEventListener("pageshow", function (e) {
+    if (e.persisted) {
+        const username = localStorage.getItem("shopUsername");
+        const currentRole = localStorage.getItem("role");
+        if (!username || currentRole !== "SHOP_OWNER") {
+            window.location.href = "index.html";
+        }
+    }
+});
+
 let currentRequestId = null;
 let acceptanceSubmitting = false;
 let profileSubmitting = false;

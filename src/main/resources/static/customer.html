@@ -705,6 +705,7 @@ tbody tr:last-child td { border-bottom: none; }
                         <th>Issue</th>
                         <th>Phone</th>
                         <th>Location</th>
+                        <th>Assigned Shop</th>
                         <th>Status</th>
                         <th>Submitted (IST)</th>
                         <th>Actions</th>
@@ -854,7 +855,10 @@ let reviewSubmitting = false;
 const uname = localStorage.getItem("username");
 const sUser = uname; // alias used in tracking links
 const role = localStorage.getItem("role");
-if (!uname || role !== "CUSTOMER") { alert("Access denied!"); window.location.href = "index.html"; }
+if (!uname || role !== "CUSTOMER" || !localStorage.getItem("token")) {
+  alert("Please sign in again to view your customer dashboard.");
+  window.location.href = "index.html";
+}
 document.getElementById("user").innerText = uname;
 
 const IND_BOUNDS = [[6.5, 68.1], [35.5, 97.4]];
@@ -1030,11 +1034,20 @@ async function submitReq(button) {
 
 // ---- Fetch requests ----
 function fetchReqs() {
-  fetch(API + "/api/requests/customer/" + uname)
-  .then(r => r.json())
+  fetch(API + "/api/requests/customer/" + encodeURIComponent(uname), {
+    headers: { "Authorization": "Bearer " + localStorage.getItem("token") }
+  })
+  .then(r => {
+    if (!r.ok) {
+      if (r.status === 401) throw new Error("Please sign in again to view your requests.");
+      if (r.status === 403) throw new Error("You can only view your own requests.");
+      throw new Error("Failed to load your requests.");
+    }
+    return r.json();
+  })
   .then(data => {
     const tb = document.querySelector("#tbl tbody"); tb.innerHTML = "";
-    if (!data.length) { tb.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:40px">No requests found. Submit one above.</td></tr>'; return; }
+    if (!data.length) { tb.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--text-muted);padding:40px">No requests found. Submit one above.</td></tr>'; return; }
     data.sort((a, b) => b.id - a.id); // Show newest first
     data.forEach((req, idx) => {
       let sc = req.status === "Pending" ? "bp" : req.status === "Accepted" ? "ba" : "bc";
@@ -1063,6 +1076,11 @@ function fetchReqs() {
       if (!actions) actions = '<span style="color:var(--text-muted)">—</span>';
       
       const ist = formatIST(req.createdAt);
+      const assignedShop = req.assignedShopName || (
+        req.assignmentStage === "BROADCAST" ? "Finding another shop..." :
+        req.assignmentStage === "OPEN" ? "No shop available yet" :
+        "Finding a shop..."
+      );
       
       tb.innerHTML += '<tr>'
         + '<td style="color:var(--text-muted);font-size:13px">#' + req.id + '</td>'
@@ -1070,12 +1088,23 @@ function fetchReqs() {
         + '<td>' + req.issue + '</td>'
         + '<td>' + (req.phone || 'N/A') + '</td>'
         + '<td style="color:var(--text-muted)">' + (req.latitude ? req.latitude.toFixed(4) + ', ' + req.longitude.toFixed(4) : 'N/A') + '</td>'
+        + '<td>' + escapeHtml(assignedShop) + '</td>'
         + '<td><span class="badge ' + sc + '">' + statusText + '</span></td>'
         + '<td style="color:var(--text-muted)">' + ist + '</td>'
         + '<td>' + actions + '</td></tr>';
     });
   })
-  .catch(() => alert("Failed to load requests."));
+  .catch(error => alert(error.message || "Failed to load requests."));
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, character => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[character]);
 }
 
 // ---- Mechanic details ----

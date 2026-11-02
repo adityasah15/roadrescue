@@ -130,6 +130,60 @@ public class ShopController {
         }).collect(Collectors.toList());
     }
 
+    @GetMapping("/admin/assignment-info")
+    public List<Map<String, Object>> getAdminAssignmentInfo() {
+        List<Shop> shops = shopRepository.findAll();
+        Map<Long, Shop> shopsById = shops.stream()
+                .collect(Collectors.toMap(Shop::getId, shop -> shop));
+
+        return requestRepository.findAll().stream().map(request -> {
+            Shop currentShop = shopsById.get(request.getAssignedShopId());
+            String currentShopName;
+            if (currentShop != null) {
+                currentShopName = shopDisplayName(currentShop);
+            } else if ("BROADCAST".equals(request.getAssignmentStage())) {
+                currentShopName = "Broadcast to available shops";
+            } else if ("OPEN".equals(request.getAssignmentStage())) {
+                currentShopName = "No shop available";
+            } else {
+                currentShopName = "No shop assigned";
+            }
+
+            String nextShopName = "—";
+            if ("Pending".equals(request.getStatus())) {
+                List<Long> excludedShopIds = parseRejectedIds(request.getRejectedShopIds());
+                if (request.getAssignedShopId() != null
+                        && !excludedShopIds.contains(request.getAssignedShopId())) {
+                    excludedShopIds.add(request.getAssignedShopId());
+                }
+
+                if (request.getLatitude() == null || request.getLongitude() == null) {
+                    boolean hasAvailableShop = shops.stream()
+                            .anyMatch(shop -> !excludedShopIds.contains(shop.getId())
+                                    && shopService.isShopOpen(shop));
+                    nextShopName = hasAvailableShop
+                            ? "Any open shop (location unavailable)"
+                            : "None available";
+                } else {
+                    Shop nextShop = shopService.findNearestOpenShop(
+                            shops,
+                            request.getLatitude(),
+                            request.getLongitude(),
+                            excludedShopIds);
+                    nextShopName = nextShop != null
+                            ? shopDisplayName(nextShop)
+                            : "None available";
+                }
+            }
+
+            Map<String, Object> assignmentInfo = new LinkedHashMap<>();
+            assignmentInfo.put("requestId", request.getId());
+            assignmentInfo.put("currentShop", currentShopName);
+            assignmentInfo.put("nextAvailableShop", nextShopName);
+            return assignmentInfo;
+        }).collect(Collectors.toList());
+    }
+
     @GetMapping("/test-email")
     public ResponseEntity<?> testEmail() {
         try {
@@ -149,10 +203,9 @@ public class ShopController {
         String username = body.get("username");
         if (username == null) return ResponseEntity.badRequest().body("Username required.");
 
-        final long rejectingShopId;
-        if (username.equals("ADMIN_FORWARD")) {
-            rejectingShopId = -1L;
-        } else {
+        boolean adminForward = username.equals("ADMIN_FORWARD");
+        Long rejectingShopId = null;
+        if (!adminForward) {
             Optional<Shop> shopOpt = shopRepository.findByUsername(username);
             if (shopOpt.isEmpty()) return ResponseEntity.notFound().build();
             rejectingShopId = shopOpt.get().getId();
@@ -163,8 +216,14 @@ public class ShopController {
         if (!"Pending".equals(req.getStatus()))
             return ResponseEntity.badRequest().body("Request is no longer pending.");
 
+        if (adminForward && req.getAssignedShopId() != null) {
+            rejectingShopId = req.getAssignedShopId();
+        }
+
         List<Long> rejected = parseRejectedIds(req.getRejectedShopIds());
-        if (!rejected.contains(rejectingShopId)) rejected.add(rejectingShopId);
+        if (rejectingShopId != null && !rejected.contains(rejectingShopId)) {
+            rejected.add(rejectingShopId);
+        }
         req.setRejectedShopIds(rejected.stream().map(String::valueOf).collect(Collectors.joining(",")));
 
         List<Shop> allShops = shopRepository.findAll();
@@ -272,6 +331,12 @@ public class ShopController {
                 .filter(s -> !s.isBlank())
                 .map(Long::parseLong)
                 .collect(Collectors.toList());
+    }
+
+    private String shopDisplayName(Shop shop) {
+        return shop.getShopName() != null && !shop.getShopName().isBlank()
+                ? shop.getShopName()
+                : shop.getUsername();
     }
 
     private boolean isValidLocation(String branchesJson) {

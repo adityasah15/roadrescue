@@ -41,6 +41,9 @@ public class ServiceRequest {
     // ID of the shop currently assigned to this request
     private Long assignedShopId;
 
+    @Transient
+    private String assignedShopName;
+
     // Comma-separated IDs of shops that already rejected (e.g. "1,3,7")
     @Column(columnDefinition = "TEXT")
     private String rejectedShopIds;
@@ -115,6 +118,9 @@ public class ServiceRequest {
 
     public Long getAssignedShopId() { return assignedShopId; }
     public void setAssignedShopId(Long assignedShopId) { this.assignedShopId = assignedShopId; }
+
+    public String getAssignedShopName() { return assignedShopName; }
+    public void setAssignedShopName(String assignedShopName) { this.assignedShopName = assignedShopName; }
 
     public String getRejectedShopIds() { return rejectedShopIds; }
     public void setRejectedShopIds(String rejectedShopIds) { this.rejectedShopIds = rejectedShopIds; }
